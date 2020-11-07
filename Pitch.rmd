@@ -1,0 +1,45 @@
+---
+title: "Motor MPG Data Analysis"
+author: "P V Vineet"
+date: "Nov 20, 2020"
+output: ioslides_presentation
+---
+
+
+## mtcars Pitch PResentation
+
+>GithubLink:https://github.com/pooh2399/DDPWeek4
+
+
+### MT car dataset
+
+> Data was provided by coursera which showed 10 aspects of automobile design and perfromance factor . Using this
+  we are able to apply linear reg using 2 vs 3 variables form the data set. Given below are facots and values
+```{r}
+library(datasets)
+head(mtcars, 3)
+```
+
+---
+
+## mtcars dataset - Format
+>In the current app it shows 5 performance factos such as MPG , HP , Cylinder and fuel comsumption. Using this factor linear reg is done
+
+## Analysis - main code
+
+```r
+  formulaTextPoint <- reactive({
+    paste("mpg ~", "as.integer(", input$variable, ")")  })
+  
+  fit <- reactive({
+    lm(as.formula(formulaTextPoint()), data=mpgData)  })
+  ...
+  output$fit <- renderPrint({
+    summary(fit()) })
+  
+  output$mpgPlot <- renderPlot({
+    with(mpgData, {
+      plot(as.formula(formulaTextPoint()))
+      abline(fit(), col=2)
+    })  })
+```
