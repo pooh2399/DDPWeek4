@@ -14,10 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 Doing this for Data Science Coursera REgression Model Week 4 Presentation
 
 The application demo built by Shiny and can be found at the URL:
-https://mam-moneim.shinyapps.io/ShinyApp/
+https://pooh2399.shinyapps.io/DataProduct_week4/
 
-Source code is at GitHub for the application and presnetation at the URL:
-https://github.com/mmonim/Coursera-Data-Products-Week-4-Project
 
 ## Web App
 
@@ -46,7 +44,7 @@ Given here is the dataset with where we build linera regression using the var pr
 head(mtcars)
 ```
 
-## Layout of Linear Regression MPG VS CYL
+## Layout of given reg of MPG VS CYL
 
 ```{r, echo=FALSE, message=FALSE}
 data("mtcars")
