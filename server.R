@@ -1,51 +1,25 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
-library(datasets)
 
-mpgData <- mtcars
-mpgData$am <- factor(mpgData$am, labels = c("Automatic", "Manual"))
+# Definiing server theroy which is required to drawhistogram
+library(shiny)
 
+# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
     
-    formulaText <- reactive({
-        paste("mpg ~", input$variable)
-    })
-    
-    formulaTextPoint <- reactive({
-        paste("mpg ~", "as.integer(", input$variable, ")")
-    })
-    
-    fit <- reactive({
-        lm(as.formula(formulaTextPoint()), data=mpgData)
-    })
-    
-    output$caption <- renderText({
-        formulaText()
-    })
-    
-    output$mpgBoxPlot <- renderPlot({
-        boxplot(as.formula(formulaText()), 
-                data = mpgData,
-                outline = input$outliers)
-    })
-    
-    output$fit <- renderPrint({
-        summary(fit())
-    })
-    
-    output$mpgPlot <- renderPlot({
-        with(mpgData, {
-            plot(as.formula(formulaTextPoint()))
-            abline(fit(), col=2)
-        })
+    output$distPlot <- renderPlot({
+        
+        #CYL based on input value of MPG is taken anf then build histogram of it
+   
+        
+        mtcars.cyl.formula <- mtcars[,input$variable1] ~ mtcars[,input$variable2]
+        mtcars.cyl.lm <- lm(formula=mtcars.cyl.formula, data=mtcars)
+        
+        
+        # scatter plot is built
+        plot(mtcars.cyl.formula, data=mtcars, xlab = input$variable1, ylab = input$variable2)
+        if (input$Abline){abline(mtcars.cyl.lm,col="Red")}
+        
     })
     
 })
+
