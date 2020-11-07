@@ -6,56 +6,55 @@ output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
-## mtcars dataset
 
-### Motor Trend Car Road Tests
+## Overview
 
-> The data was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models).
-### Source
-> Henderson and Velleman (1981), Building multiple regression models interactively. Biometrics, 37, 391–411.
-```{r}
-library(datasets)
-head(mtcars, 3)
+Doing this for Data Science Coursera REgression Model Week 4 Presentation
+
+The application demo built by Shiny and can be found at the URL:
+https://mam-moneim.shinyapps.io/ShinyApp/
+
+Source code is at GitHub for the application and presnetation at the URL:
+https://github.com/mmonim/Coursera-Data-Products-Week-4-Project
+
+## Web App
+
+Aim of this app is to cal Linear regression for different var of MT Cars Data set providing with multiple inputs
+
+* 1st variable of regression are:
+
+    + MPG,
+    + HP,
+  
+* 2nd Variable of resgression are: 
+
+    + Cylinders, 
+    + Transmission, 
+    + Gears
+  
+* The user has to select the way he want to see the prediction/
+
+
+
+## Data set
+ 
+Given here is the dataset with where we build linera regression using the var provided
+
+```{r mtcars, echo = TRUE}
+head(mtcars)
 ```
----
 
-## mtcars dataset - Format
+## Layout of Linear Regression MPG VS CYL
 
-**A data frame with 32 observations on 11 variables.**
-
-| Index | Field | Detail |
-------- | ----- | ------ |
-| [, 1] | mpg | Miles/(US) gallon |
-| [, 2]  | cyl | Number of cylinders |
-| [, 3]	| disp | Displacement (cu.in.) |
-| [, 4]	| hp | Gross horsepower |
-| [, 5]	| drat | Rear axle ratio |
-| [, 6]	| wt | Weight (lb/1000) |
-| [, 7]	| qsec | 1/4 mile time |
-| [, 8]	| vs | V/S |
-| [, 9]	| am | Transmission (0 = automatic, 1 = manual) |
-| [,10]	| gear | Number of forward gears |
-| [,11]	| carb | Number of carburetors |
-
----
-
-## Analysis - main code
-
-```r
-  formulaTextPoint <- reactive({
-    paste("mpg ~", "as.integer(", input$variable, ")")  })
-  
-  fit <- reactive({
-    lm(as.formula(formulaTextPoint()), data=mpgData)  })
-  ...
-  output$fit <- renderPrint({
-    summary(fit()) })
-  
-  output$mpgPlot <- renderPlot({
-    with(mpgData, {
-      plot(as.formula(formulaTextPoint()))
-      abline(fit(), col=2)
-    })  })
+```{r, echo=FALSE, message=FALSE}
+data("mtcars")
+ mtcars.cyl.formula <- mpg ~ cyl
+    mtcars.cyl.lm <- lm(formula=mtcars.cyl.formula, data=mtcars)
+     
+    
+    # draw the scatter diagram with the specified value of mpg
+      plot(mtcars.cyl.formula, data=mtcars)
+      abline(mtcars.cyl.lm,col="Red")
 ```
